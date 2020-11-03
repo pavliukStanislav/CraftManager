@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "wowalchemistcalculator": {
+      "hosting": {
+        "WoWAlchemistCalculator": [
+          "wowalchemistcalculator"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "wowalchemistcalculator"
+  }
+}
