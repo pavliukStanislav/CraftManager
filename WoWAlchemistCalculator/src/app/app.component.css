@@ -1,0 +1,6 @@
+.mainComponent {
+    max-width: 960px;    
+    min-height: 350px;
+    min-width: 320px;
+    margin: 0 auto;
+  }
