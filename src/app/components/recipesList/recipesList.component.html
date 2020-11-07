@@ -1,0 +1,25 @@
+<!-- <div>
+    <p>This is list</p>
+    <mat-list class="mat-list mat-list-base">
+        <div *ngFor="let item of recipesList">            
+            <mat-list-item >{{item}}</mat-list-item>            
+            <mat-divider role="separator" class="mat-divider mat-divider-horizontal" aria-orientation="horizontal"></mat-divider>
+        </div>
+    </mat-list>
+</div> -->
+
+<mat-accordion>    
+
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false" *ngFor="let item of recipesList">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            {{item}}
+        </mat-panel-title>
+        <mat-panel-description>
+          Currently I am {{panelOpenState ? 'open' : 'closed'}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p>I'm visible because I am open</p>
+    </mat-expansion-panel>
+  </mat-accordion>

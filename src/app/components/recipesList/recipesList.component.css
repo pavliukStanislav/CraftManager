@@ -1,0 +1,23 @@
+/* img {
+    float: left;
+    max-width: 30%;
+    margin: 0 1% 0 1%;
+}
+
+.title {
+    font-size: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #ce93d8;
+}
+
+p {
+    text-align: justify;
+    margin-left: 1%;
+} */
+
+.mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }

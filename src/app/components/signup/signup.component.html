@@ -1,0 +1,22 @@
+<form class="form">
+    <mat-label class="title">This is Sign up form =)</mat-label> 
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="pat@example.com" [formControl]="email" required>
+        <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]='hide'>
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <div class="form-footer">
+        <button mat-raised-button (click)="signUp()">SignUp</button>
+        <a mat-button routerLink="/signin">SignIn</a>
+    </div>
+    <button mat-raised-button (click)="auth.googleSignIn()">SignUp via Google</button>
+</form> 
