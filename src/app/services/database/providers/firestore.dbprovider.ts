@@ -8,4 +8,8 @@ export class FirestoreDbProvider implements IDbProvider {
     addDataToCollection(collectionName: string, data: any) {
         this.firestore.collection(collectionName).add(data);
     }
+
+    getDocumentsFromColection(collectionName: string) : Observable<any>{        
+        return this.firestore.collection(collectionName).get();
+    }
 }

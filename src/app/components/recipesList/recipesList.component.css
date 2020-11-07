@@ -1,7 +1,6 @@
-recipes-list {
+/* img {
     float: left;
-    max-width: 50%;
-    min-width: 50%;
+    max-width: 30%;
     margin: 0 1% 0 1%;
 }
 
@@ -17,4 +16,8 @@ a {
 p {
     text-align: justify;
     margin-left: 1%;
-}
+} */
+
+.mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }

@@ -8,6 +8,9 @@ import 'firebase/storage';
 import { FirestoreStorageProvider } from '../../services/storage/providers/firestore.storageprovider';
 import { CvsService } from 'src/app/services/storage/cvs.service';
 import { LogService } from 'src/app/services/logging/log.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
     selector: 'ps-header',
@@ -20,7 +23,11 @@ export class HeaderComponent{
 
     cvService: CvsService;
 
-    constructor(fireStorage: AngularFireStorage, log: LogService, private analytics: AngularFireAnalytics){
+    constructor(
+            fireStorage: AngularFireStorage, 
+            log: LogService, 
+            private analytics: AngularFireAnalytics,
+            public auth: AuthService){
         let storageProvider = new FirestoreStorageProvider(fireStorage);
         this.cvService = new CvsService(storageProvider, log)
     }    
@@ -38,4 +45,4 @@ export class HeaderComponent{
             window.open(url);
         });
     }
-}
+} 
