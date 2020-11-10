@@ -11,6 +11,9 @@ import { MatFormFieldModule}    from '@angular/material/form-field';
 import { MatInputModule }       from '@angular/material/input';
 import { MatCardModule }        from '@angular/material/card';
 import { MatExpansionModule }   from '@angular/material/expansion';
+import { MatTreeModule }        from "@angular/material/tree";
+import { MatSnackBarModule }    from "@angular/material/snack-bar";
+import { MatTableModule }       from "@angular/material/table";
 
 @NgModule({
     imports: [
@@ -24,7 +27,10 @@ import { MatExpansionModule }   from '@angular/material/expansion';
         MatInputModule,
         MatCardModule,
         CommonModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatTreeModule,
+        MatSnackBarModule,
+        MatTableModule
     ],
     exports: [
         MatToolbarModule,
@@ -36,7 +42,10 @@ import { MatExpansionModule }   from '@angular/material/expansion';
         MatFormFieldModule,
         MatInputModule,
         MatCardModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatTreeModule,
+        MatSnackBarModule,
+        MatTableModule
     ],
     declarations: []
 })

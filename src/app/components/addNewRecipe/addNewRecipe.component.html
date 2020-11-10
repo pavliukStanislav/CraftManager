@@ -1,0 +1,89 @@
+<form class="form" [formGroup]="addNewRecipeForm">
+  <mat-label class="title">Create new recipe</mat-label> 
+  <mat-form-field class="full-width">        
+    <mat-label>Recipe name</mat-label>
+    <input matInput formControlName="name" required>    
+  </mat-form-field>
+
+  <mat-form-field class="full-width">        
+    <mat-label>Item auc cost</mat-label>
+    <input matInput type="number" formControlName="cost" required>
+  </mat-form-field>
+  
+  <div class="full-width form-footer">
+    <mat-form-field>
+      <mat-label>Ingredianse 1</mat-label>
+      <input matInput formControlName="ingredianse_name_1" required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Count 1</mat-label>    
+      <input matInput type="number"  min="1" formControlName="ingredianse_count_1" required>
+    </mat-form-field>
+  </div>
+
+  <div class="full-width form-footer">
+    <mat-form-field>
+      <mat-label>Ingredianse 2</mat-label>
+      <input matInput formControlName="ingredianse_name_2" required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Count 2</mat-label>    
+      <input matInput type="number"  min="1" formControlName="ingredianse_count_2" required>
+    </mat-form-field>
+  </div>
+
+  <div class="full-width form-footer">
+    <mat-form-field>
+      <mat-label>Ingredianse 3</mat-label>
+      <input matInput formControlName="ingredianse_name_3">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Count 3</mat-label>    
+      <input matInput type="number"  min="1" formControlName="ingredianse_count_3">
+    </mat-form-field>
+  </div>
+
+  <div class="full-width form-footer">
+    <mat-form-field>
+      <mat-label>Ingredianse 4</mat-label>
+      <input matInput formControlName="ingredianse_name_4">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Count 4</mat-label>    
+      <input matInput type="number"  min="1" formControlName="ingredianse_count_4">
+    </mat-form-field>
+  </div>
+
+  <div class="full-width form-footer">
+    <mat-form-field>
+      <mat-label>Ingredianse 5</mat-label>
+      <input matInput formControlName="ingredianse_name_5">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Count 5</mat-label>    
+      <input matInput type="number"  min="1" formControlName="ingredianse_count_5">
+    </mat-form-field>
+  </div>
+
+  <div class="full-width form-footer">
+    <mat-form-field>
+      <mat-label>Ingredianse 6</mat-label>
+      <input matInput formControlName="ingredianse_name_6">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Count 6</mat-label>    
+      <input matInput type="number"  min="1" formControlName="ingredianse_count_6">
+    </mat-form-field>
+  </div>
+
+  <mat-action-row class="full-width">
+    <button mat-raised-button color="primary" (click)="createRecipe()">Add</button>
+  </mat-action-row>
+    
+</form> 

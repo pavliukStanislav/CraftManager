@@ -5,11 +5,16 @@ import { AngularFirestore } from '@angular/fire/firestore/firestore';
 export class FirestoreDbProvider implements IDbProvider {    
     constructor(private firestore: AngularFirestore){        
     }
-    addDataToCollection(collectionName: string, data: any) {
-        this.firestore.collection(collectionName).add(data);
+
+    addDataToCollection(collectionName: string, data: any, documentName?: string) {
+        if (documentName){
+            this.firestore.collection(collectionName).doc(documentName).set(data);
+        } else {
+            this.firestore.collection(collectionName).add(data);
+        }
     }
 
-    getDocumentsFromColection(collectionName: string) : Observable<any>{        
-        return this.firestore.collection(collectionName).get();
+    getCollectionValues(collectionName: string) : Observable<any>{        
+        return this.firestore.collection(collectionName).valueChanges();
     }
 }

@@ -15,14 +15,15 @@ import { environment }                from 'src/environments/environment';
 import { MaterialModule }             from './components/material/material.module';
 import { AppRoutingModule }           from './app-routing.module';
 import { BrowserAnimationsModule }    from '@angular/platform-browser/animations';
-import { RouterModule }               from '@angular/router';
 
 import { HomeComponent }              from './components/home/home.component';
 import { RecipesListComponent }       from './components/recipesList/recipesList.component';
 import { NotFountComponent }          from './components/not-found/not-found.component';
 import { SignInComponent }            from './components/signIn/signin.component';
 import { SignUpComponent }            from './components/signup/signup.component';
-
+import { AddNewRecipeComponent }      from './components/addNewRecipe/addNewRecipe.component';
+import { ComponentsListComponent } from './components/coponentsList/componentsList.component';
+import { AddNewComponentComponent } from './components/addNewComponent/addNewComponent.component';
 
 
 @NgModule({
@@ -33,7 +34,10 @@ import { SignUpComponent }            from './components/signup/signup.component
     NotFountComponent,
     RecipesListComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    AddNewRecipeComponent,
+    ComponentsListComponent,
+    AddNewComponentComponent
   ],
   imports: [
     AppRoutingModule,
