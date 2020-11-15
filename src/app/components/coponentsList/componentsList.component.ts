@@ -1,10 +1,12 @@
-import  { Component } from '@angular/core';
+import  { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FirestoreDbProvider} from '../../services/database/providers/firestore.dbprovider';
 import { ComponentsService } from '../../services/database/components.servise';
 import { LogService } from '../../services/logging/log.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Component as ComponentModel } from '../../models/Component.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { MatTableDataSource }   from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
     selector: "components-list",
@@ -14,9 +16,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class ComponentsListComponent{
     componentsService: ComponentsService;
-    private currentUserId: string;
-    components: ComponentModel[]
-    columnsToDisplay : string[] = ['name', 'cost'];
+    
+    columnsToDisplay : string[] = ['name', 'cost'];   
+    components: MatTableDataSource<ComponentModel>;
+
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     constructor(
         public auth: AuthService,
@@ -32,8 +36,9 @@ export class ComponentsListComponent{
         {
             this.componentsService.getComponentsList(user.uid).subscribe(components => 
             {
-                this.components = components;
+                this.components = new MatTableDataSource<ComponentModel>(components);
+                this.components.paginator = this.paginator;
             })
-        });    
+        });        
     }
 }

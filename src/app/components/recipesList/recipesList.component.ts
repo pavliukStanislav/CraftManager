@@ -1,9 +1,11 @@
-import  { Component } from '@angular/core';
+import  { Component, ViewChild } from '@angular/core';
 import { FirestoreDbProvider} from '../../services/database/providers/firestore.dbprovider';
 import { RecipesService } from '../../services/database/recipes.servise';
 import { LogService } from '../../services/logging/log.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
     selector: "recipes-list",
@@ -13,9 +15,12 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class RecipesListComponent{
     recipesService: RecipesService;
-
-    recipes: RecipesListItem[]
     columnsToDisplay : string[] = ['name', 'cost', 'self_cost', 'profit'];
+
+    //recipes: RecipesListItem[]
+    recipes: MatTableDataSource<RecipesListItem>;
+
+    @ViewChild(MatPaginator) pagonator: MatPaginator;
 
     constructor(
         fireStorage: AngularFirestore, 
@@ -29,14 +34,16 @@ export class RecipesListComponent{
         this.auth.user$.subscribe(user =>
         {
             this.recipesService.getRecipesList(user.uid).subscribe(recipes => {
-                this.recipes = recipes.map(x => {
+                this.recipes = new MatTableDataSource<RecipesListItem>(recipes.map(x => {
                     return {
                         name: x.name,
                         cost: x.cost,
                         selfCost: x.cost,
                         profit: "+2.3g | +14%"
                     }
-                });
+                }));
+
+                this.recipes.paginator = this.pagonator;
             });
         });
     }
