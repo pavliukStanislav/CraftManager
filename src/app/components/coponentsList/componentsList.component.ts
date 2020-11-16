@@ -25,8 +25,8 @@ export class ComponentsListComponent{
     constructor(
         public auth: AuthService,
         fireStorage: AngularFirestore, 
-        log: LogService,
-        ){
+        log: LogService)
+    {
         let storageProvider = new FirestoreDbProvider(fireStorage);
         this.componentsService = new ComponentsService(storageProvider, log);
     }   

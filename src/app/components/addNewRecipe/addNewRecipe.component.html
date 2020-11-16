@@ -13,7 +13,21 @@
   <div class="full-width form-footer">
     <mat-form-field>
       <mat-label>Ingredianse 1</mat-label>
-      <input matInput formControlName="ingredianse_name_1" required>
+
+
+
+      <input 
+        matInput 
+        type="text"
+        formControlName="ingredianse_name_1"
+        required 
+        [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+
     </mat-form-field>
 
     <mat-form-field>
