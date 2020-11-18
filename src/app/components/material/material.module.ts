@@ -15,6 +15,8 @@ import { MatTreeModule }        from "@angular/material/tree";
 import { MatSnackBarModule }    from "@angular/material/snack-bar";
 import { MatTableModule }       from "@angular/material/table";
 import { MatPaginatorModule }   from '@angular/material/paginator';
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatDialogModule }      from "@angular/material/dialog";
 
 @NgModule({
     imports: [
@@ -32,7 +34,9 @@ import { MatPaginatorModule }   from '@angular/material/paginator';
         MatTreeModule,
         MatSnackBarModule,
         MatTableModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatAutocompleteModule,
+        MatDialogModule
     ],
     exports: [
         MatToolbarModule,
@@ -48,7 +52,9 @@ import { MatPaginatorModule }   from '@angular/material/paginator';
         MatTreeModule,
         MatSnackBarModule,
         MatTableModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatAutocompleteModule,
+        MatDialogModule
     ],
     declarations: []
 })

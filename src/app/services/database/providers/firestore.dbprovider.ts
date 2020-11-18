@@ -17,4 +17,12 @@ export class FirestoreDbProvider implements IDbProvider {
     getCollectionValues(collectionName: string) : Observable<any>{        
         return this.firestore.collection(collectionName).valueChanges();
     }
+
+    getCollectionValuesWithDocumentMetadata(collectionName: string) : Observable<any>{        
+        return this.firestore.collection(collectionName).snapshotChanges();
+    }
+
+    removeDocumentFromCollection(collectionName: string, documentName: string){
+        return this.firestore.collection(collectionName).doc(documentName).delete();
+    }    
 }

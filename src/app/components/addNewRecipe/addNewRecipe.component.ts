@@ -7,6 +7,9 @@ import { RecipesService } from 'src/app/services/database/recipes.servise';
 import { FirestoreDbProvider } from 'src/app/services/database/providers/firestore.dbprovider';
 import { AngularFirestore } from '@angular/fire/firestore';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { ComponentsService } from 'src/app/services/database/components.servise';
 
 @Component({
     selector: "add-new-recipe",
@@ -16,8 +19,14 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class AddNewRecipeComponent{
     addNewRecipeForm: FormGroup;
+
     recipesService: RecipesService;
+    componentsService: ComponentsService;
+    
     private currentUserId: string;
+
+    options: string[];
+    filteredOptions: Observable<string[]>;
 
     constructor(
             public auth: AuthService,
@@ -27,6 +36,7 @@ export class AddNewRecipeComponent{
             private snackBar: MatSnackBar){
         let storageProvider = new FirestoreDbProvider(fireStorage);
         this.recipesService = new RecipesService(storageProvider, log);
+        this.componentsService = new ComponentsService(storageProvider, log);
     }   
     
 
@@ -46,11 +56,31 @@ export class AddNewRecipeComponent{
             ingredianse_count_5: new FormControl(''),
             ingredianse_name_6: new FormControl(''),
             ingredianse_count_6: new FormControl('')
-        });
+        });              
 
         this.auth.user$.subscribe(user =>
-            this.currentUserId = user.uid);
+        {
+            this.currentUserId = user.uid
+            this.componentsService.getComponentsList(this.currentUserId).subscribe(components =>
+                {
+                    console.log(this.currentUserId)
+                    console.log(components);
+                    this.options = components.map(item => item.name);
+                    this.filteredOptions = this.addNewRecipeForm.get('ingredianse_name_1').valueChanges
+                    .pipe(
+                        startWith(''),
+                        map(value => this.filter(value))
+                    );
+                }
+            )
+        });
     }   
+
+    private filter(value: string): string[]{
+        console.log(value);
+        const filterValue = value.toLowerCase();
+        return this.options.filter(options => options.toLowerCase().includes(filterValue));
+    }
 
     createRecipe(){
         this.recipesService.addDataToCollection(
