@@ -24,6 +24,7 @@ import { SignUpComponent }            from './components/signup/signup.component
 import { AddNewRecipeComponent }      from './components/addNewRecipe/addNewRecipe.component';
 import { ComponentsListComponent } from './components/coponentsList/componentsList.component';
 import { AddNewComponentComponent } from './components/addNewComponent/addNewComponent.component';
+import { DeleteDialogComponent } from './components/dialogs/removeDialog/deleteDialog.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { AddNewComponentComponent } from './components/addNewComponent/addNewCom
     SignUpComponent,
     AddNewRecipeComponent,
     ComponentsListComponent,
-    AddNewComponentComponent
+    AddNewComponentComponent,
+    DeleteDialogComponent
   ],
   imports: [
     AppRoutingModule,

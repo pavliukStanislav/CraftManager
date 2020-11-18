@@ -16,6 +16,7 @@ import { MatSnackBarModule }    from "@angular/material/snack-bar";
 import { MatTableModule }       from "@angular/material/table";
 import { MatPaginatorModule }   from '@angular/material/paginator';
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatDialogModule }      from "@angular/material/dialog";
 
 @NgModule({
     imports: [
@@ -34,7 +35,8 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
         MatSnackBarModule,
         MatTableModule,
         MatPaginatorModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatDialogModule
     ],
     exports: [
         MatToolbarModule,
@@ -51,7 +53,8 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
         MatSnackBarModule,
         MatTableModule,
         MatPaginatorModule,
-        MatAutocompleteModule
+        MatAutocompleteModule,
+        MatDialogModule
     ],
     declarations: []
 })

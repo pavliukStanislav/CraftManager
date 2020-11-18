@@ -25,4 +25,15 @@ export class RecipesService{
 
       this.dbProvider.addDataToCollection(this.collectionName, data, documentName);
     }
+
+    deleteRecipe(name: string, userId: string){
+      this.dbProvider.getCollectionValuesWithDocumentMetadata(this.collectionName).subscribe(data =>
+        {
+          data.forEach(element => {
+            if (element.payload.doc.data().name == name && element.payload.doc.data().userId == userId){
+              this.dbProvider.removeDocumentFromCollection(this.collectionName, element.payload.doc.id);
+            }
+          });
+        });
+    }
 }
