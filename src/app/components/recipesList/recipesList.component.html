@@ -1,5 +1,4 @@
-<a mat-raised-button color="primary" routerLink="/create-recipe">Create new recipe!</a>
-
+<a mat-raised-button color="primary" (click)="openAddNewRecipeDialog()">Create new recipe!</a>
 <div>
   <table mat-table [dataSource]="recipes" class="mat-elevation-z8">
     <ng-container matColumnDef="name">

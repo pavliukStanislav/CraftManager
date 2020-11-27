@@ -1,14 +1,12 @@
-:host { 
+:host {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
 }
 
 .form-control{
   display: block;
 }
-
 
  .form {
     min-width: 150px;

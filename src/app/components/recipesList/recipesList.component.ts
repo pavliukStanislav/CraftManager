@@ -12,12 +12,13 @@ import { Ingredient }                   from 'src/app/models/Recipe.model';
 import { ComponentsService }            from 'src/app/services/database/components.servise';
 import { Component as ComponentModel }  from '../../models/Component.model';
 import { element } from 'protractor';
+import { AddNewRecipeComponent } from   '../dialogs/addNewRecipe/addNewRecipe.component';
 
 interface RecipesListItem{
     name: string;
     cost: number;
     selfCost: string;
-    profit: string; // "+2.3g | +14%" "-0.4g | -5%"
+    profit: string;
 }
 
 @Component({
@@ -53,9 +54,7 @@ export class RecipesListComponent{
         {
             this.componentsService.getComponentsList(user.uid).subscribe(components => 
             {
-                this.recipesService.getRecipesList(user.uid).subscribe(recipes => {
-                    console.log({recipes});
-    
+                this.recipesService.getRecipesList(user.uid).subscribe(recipes => {    
                     this.recipes = new MatTableDataSource<RecipesListItem>(recipes.map(x => {
                         return {
                             name: x.name,
@@ -69,6 +68,10 @@ export class RecipesListComponent{
                 });  
             })            
         });
+    }
+
+    openAddNewRecipeDialog(){
+        this.dialog.open(AddNewRecipeComponent);
     }
 
     openDeleteDialog(rowData){
@@ -90,9 +93,8 @@ export class RecipesListComponent{
 
     getSelfCost(ingredientes: Ingredient[], allComponents: ComponentModel[]): string{
         let result: number = 0;
-
         var found = true;
-        console.log({ingredientes});
+
         ingredientes.forEach(ingredient =>
         {            
             if (ingredient.name != "")
@@ -102,9 +104,6 @@ export class RecipesListComponent{
                     found = false;
                     return;
                 } else {
-                    console.log(ingredient.count);
-                    console.log(component.cost);
-                    console.log(result);
                     result += ingredient.count * component.cost;
                     
                 }   
@@ -112,7 +111,6 @@ export class RecipesListComponent{
         });
 
         if (found){
-            console.log(result);
             return result.toString();
         } else {
             return "Can't calculate";
