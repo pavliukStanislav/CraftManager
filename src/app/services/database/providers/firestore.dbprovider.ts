@@ -5,6 +5,10 @@ import { AngularFirestore } from '@angular/fire/firestore/firestore';
 export class FirestoreDbProvider implements IDbProvider {    
     constructor(private firestore: AngularFirestore){        
     }
+    
+    updateDocumentInCollection(collectionName: string, documentName: string, data: any) {
+        return this.firestore.collection(collectionName).doc(documentName).update(data);
+    }
 
     addDataToCollection(collectionName: string, data: any, documentName?: string) {
         if (documentName){

@@ -21,11 +21,11 @@ import { RecipesListComponent }       from './components/recipesList/recipesList
 import { NotFountComponent }          from './components/not-found/not-found.component';
 import { SignInComponent }            from './components/signIn/signin.component';
 import { SignUpComponent }            from './components/signup/signup.component';
-import { AddNewRecipeComponent }      from './components/addNewRecipe/addNewRecipe.component';
-import { ComponentsListComponent } from './components/coponentsList/componentsList.component';
-import { AddNewComponentComponent } from './components/addNewComponent/addNewComponent.component';
-import { DeleteDialogComponent } from './components/dialogs/removeDialog/deleteDialog.component';
-
+import { AddNewRecipeComponent }      from './components/dialogs/addNewRecipe/addNewRecipe.component';
+import { ComponentsListComponent }    from './components/coponentsList/componentsList.component';
+import { AddNewComponentComponent }   from './components/dialogs/addNewComponent/addNewComponent.component';
+import { DeleteDialogComponent }      from './components/dialogs/removeDialog/deleteDialog.component';
+import { EditComponentDialogComponent } from './components/dialogs/editComponent/editComponentDialog.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,8 @@ import { DeleteDialogComponent } from './components/dialogs/removeDialog/deleteD
     AddNewRecipeComponent,
     ComponentsListComponent,
     AddNewComponentComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    EditComponentDialogComponent
   ],
   imports: [
     AppRoutingModule,
