@@ -43,8 +43,8 @@ export class AddNewRecipeComponent{
     addNewIngr(){
         this.addNewRecipeForm.get('ingredients').push(
             new FormGroup({
-                ingredientName: new FormControl('', Validators.required),
-                ingredientCount: new FormControl('', Validators.required)
+                name: new FormControl('', Validators.required),
+                count: new FormControl('', Validators.required)
             })
         );
         
@@ -56,11 +56,11 @@ export class AddNewRecipeComponent{
             this.componentsService.getComponentsList(this.currentUserId).subscribe(components =>
             {
                 this.options = components.map(item => item.name);
-                this.filteredOptions = this.addNewRecipeForm.get('ingredients').at(index).get('ingredientName').valueChanges
+                this.filteredOptions = this.addNewRecipeForm.get('ingredients').at(index).get('name').valueChanges
                     .pipe(
                         startWith(''),
                         map(value => this.filter(value.toString()))
-                    );
+                    ); 
             })
         });
     }
