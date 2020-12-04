@@ -26,6 +26,7 @@ import { ComponentsListComponent }    from './components/coponentsList/component
 import { AddNewComponentComponent }   from './components/dialogs/addNewComponent/addNewComponent.component';
 import { DeleteDialogComponent }      from './components/dialogs/removeDialog/deleteDialog.component';
 import { EditComponentDialogComponent } from './components/dialogs/editComponent/editComponentDialog.component';
+import { EditRecipeComponent }        from './components/dialogs/editRecipe/editRecipe.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { EditComponentDialogComponent } from './components/dialogs/editComponent
     ComponentsListComponent,
     AddNewComponentComponent,
     DeleteDialogComponent,
-    EditComponentDialogComponent
+    EditComponentDialogComponent,
+    EditRecipeComponent
   ],
   imports: [
     AppRoutingModule,

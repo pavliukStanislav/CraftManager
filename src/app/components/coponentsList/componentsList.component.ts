@@ -59,7 +59,7 @@ export class ComponentsListComponent{
     openEditComponentDialog(rowData){
         const dialogRef = this.dialog.open(
             EditComponentDialogComponent,
-            { data: rowData } )
+            { data: rowData } );
         dialogRef.afterClosed().subscribe(result => {
             if (result !== undefined){
                 this.editComponent(result);

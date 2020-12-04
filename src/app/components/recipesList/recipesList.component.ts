@@ -14,12 +14,21 @@ import { Component as ComponentModel }  from '../../models/Component.model';
 import { MatSort }                      from "@angular/material/sort";
 import { AddNewRecipeComponent }        from '../dialogs/addNewRecipe/addNewRecipe.component';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { EditRecipeComponent } from '../dialogs/editRecipe/editRecipe.component';
 
 interface RecipesListItem{
     name: string;
     cost: number;
     selfCost: string;
     profit: string;
+    costEffective: boolean;
+    ingredients: Array<IngredientsInfo>;
+}
+
+interface IngredientsInfo{
+    name: string;
+    count: number;
+    cost: number;
 }
 
 @Component({
@@ -38,7 +47,7 @@ interface RecipesListItem{
 export class RecipesListComponent{
     recipesService: RecipesService;
     componentsService: ComponentsService;
-    columnsToDisplay : string[] = ['name', 'cost', 'self_cost', 'profit', 'actions'];
+    columnsToDisplay : string[] = ['collaped','name', 'cost', 'self_cost', 'profit', 'actions'];
     detailColumnsToDisplay : string [] = ['name', 'count', 'cost'];
     expandedElement: RecipesListItem | null;
 
@@ -105,6 +114,17 @@ export class RecipesListComponent{
                 this.deleteRecipe(rowData.name);
             }
         });
+    }
+
+    openEditDialog(rowData){
+        const dialogRef = this.dialog.open(
+            EditRecipeComponent,
+            {
+                data: {
+                    name: rowData.name,
+                    cost: rowData.cost,
+                    ingredients: this.recipes.data.find(x => x.name == rowData.name).ingredients
+            }});
     }
 
     deleteRecipe(recipeName: string){

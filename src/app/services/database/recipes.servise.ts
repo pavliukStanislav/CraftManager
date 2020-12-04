@@ -26,6 +26,18 @@ export class RecipesService{
       this.dbProvider.addDataToCollection(this.collectionName, data, documentName);
     }
 
+    updateRecipe(data: Recipe){
+      this.dbProvider.getCollectionValuesWithDocumentMetadata(this.collectionName).subscribe(collection =>
+        {
+          collection.forEach(element => {
+            if (element.payload.doc.data().name == data.name && element.payload.doc.data().userId == data.userId){
+              this.dbProvider.updateDocumentInCollection(this.collectionName, element.payload.doc.id, data);
+            }
+          });
+        }
+      )
+    }
+
     deleteRecipe(name: string, userId: string){
       this.dbProvider.getCollectionValuesWithDocumentMetadata(this.collectionName).subscribe(data =>
         {

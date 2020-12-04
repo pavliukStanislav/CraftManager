@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { RecipesService } from 'src/app/services/database/recipes.servise';
 import { FirestoreDbProvider } from 'src/app/services/database/providers/firestore.dbprovider';
 import { AngularFirestore } from '@angular/fire/firestore';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ComponentsService } from 'src/app/services/database/components.servise';
