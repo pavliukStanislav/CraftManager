@@ -6,7 +6,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { RecipesService } from 'src/app/services/database/recipes.servise';
 import { FirestoreDbProvider } from 'src/app/services/database/providers/firestore.dbprovider';
 import { AngularFirestore } from '@angular/fire/firestore';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { ComponentsService } from 'src/app/services/database/components.servise';
@@ -43,8 +43,8 @@ export class AddNewRecipeComponent{
     addNewIngr(){
         this.addNewRecipeForm.get('ingredients').push(
             new FormGroup({
-                ingredientName: new FormControl('', Validators.required),
-                ingredientCount: new FormControl('', Validators.required)
+                name: new FormControl('', Validators.required),
+                count: new FormControl('', Validators.required)
             })
         );
         
@@ -56,11 +56,11 @@ export class AddNewRecipeComponent{
             this.componentsService.getComponentsList(this.currentUserId).subscribe(components =>
             {
                 this.options = components.map(item => item.name);
-                this.filteredOptions = this.addNewRecipeForm.get('ingredients').at(index).get('ingredientName').valueChanges
+                this.filteredOptions = this.addNewRecipeForm.get('ingredients').at(index).get('name').valueChanges
                     .pipe(
                         startWith(''),
                         map(value => this.filter(value.toString()))
-                    );
+                    ); 
             })
         });
     }

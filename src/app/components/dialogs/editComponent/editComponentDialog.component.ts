@@ -17,7 +17,7 @@ export class EditComponentDialogComponent{
   localData: any;
 
   constructor(
-    public fialogRef: MatDialogRef<EditComponentDialogComponent>,
+    public dialogRef: MatDialogRef<EditComponentDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: EditComponentData) { 
   }
 
@@ -25,6 +25,6 @@ export class EditComponentDialogComponent{
   }
 
   close(){
-    this.fialogRef.close();
+    this.dialogRef.close();
   }
 }

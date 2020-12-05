@@ -1,4 +1,4 @@
-import { Component, ViewChild }         from '@angular/core';
+import { AfterViewInit, Component, ViewChild }         from '@angular/core';
 import { FirestoreDbProvider}           from '../../services/database/providers/firestore.dbprovider';
 import { RecipesService }               from '../../services/database/recipes.servise';
 import { LogService }                   from '../../services/logging/log.service';
@@ -11,30 +11,50 @@ import { DeleteDialogComponent }        from '../dialogs/removeDialog/deleteDial
 import { Ingredient }                   from 'src/app/models/Recipe.model';
 import { ComponentsService }            from 'src/app/services/database/components.servise';
 import { Component as ComponentModel }  from '../../models/Component.model';
-import { element } from 'protractor';
-import { AddNewRecipeComponent } from   '../dialogs/addNewRecipe/addNewRecipe.component';
+import { MatSort }                      from "@angular/material/sort";
+import { AddNewRecipeComponent }        from '../dialogs/addNewRecipe/addNewRecipe.component';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import { EditRecipeComponent } from '../dialogs/editRecipe/editRecipe.component';
 
 interface RecipesListItem{
     name: string;
     cost: number;
     selfCost: string;
     profit: string;
+    costEffective: boolean;
+    ingredients: Array<IngredientsInfo>;
+}
+
+interface IngredientsInfo{
+    name: string;
+    count: number;
+    cost: number;
 }
 
 @Component({
     selector: "recipes-list",
     templateUrl: "./recipesList.component.html",
     styleUrls: ['./recipesList.component.css'],
-    providers: [ LogService ]
+    providers: [ LogService ],
+    animations: [
+        trigger('detailExpand', [
+          state('collapsed', style({height: '0px', minHeight: '0'})),
+          state('expanded', style({height: '*'})),
+          transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+      ],
 })
 export class RecipesListComponent{
     recipesService: RecipesService;
     componentsService: ComponentsService;
-    columnsToDisplay : string[] = ['name', 'cost', 'self_cost', 'profit', 'actions'];
+    columnsToDisplay : string[] = ['collaped','name', 'cost', 'self_cost', 'profit', 'actions'];
+    detailColumnsToDisplay : string [] = ['name', 'count', 'cost'];
+    expandedElement: RecipesListItem | null;
 
     recipes: MatTableDataSource<RecipesListItem>;
 
-    @ViewChild(MatPaginator) pagonator: MatPaginator;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
 
     constructor(
         fireStorage: AngularFirestore, 
@@ -45,8 +65,6 @@ export class RecipesListComponent{
         let storageProvider = new FirestoreDbProvider(fireStorage);
         this.recipesService = new RecipesService(storageProvider, log);
         this.componentsService = new ComponentsService(storageProvider, log);
-
-
     }   
     
     ngOnInit(): void {
@@ -56,15 +74,29 @@ export class RecipesListComponent{
             {
                 this.recipesService.getRecipesList(user.uid).subscribe(recipes => {    
                     this.recipes = new MatTableDataSource<RecipesListItem>(recipes.map(x => {
+                        let selfCost = this.getSelfCost(x.ingredients, components);
+                        let profitCount = x.cost - +selfCost;
+                        let profitPersentage = (profitCount * 100 / x.cost).toFixed(2);
+
                         return {
                             name: x.name,
                             cost: x.cost,
-                            selfCost: this.getSelfCost(x.ingredients, components),
-                            profit: "+2.3g | +14%"
+                            selfCost: selfCost,
+                            profit: profitCount > 0 ? `${profitCount} | ${profitPersentage}%` : selfCost,
+                            costEffective: profitCount > 0 ? true: false,
+                            ingredients: x.ingredients.map(ingr => {
+                                return {
+                                    name: ingr.name,
+                                    count: ingr.count,
+                                    cost: components.find(x => x.name == ingr.name)?.cost
+                                }})
                         }
                     }));
-    
-                    this.recipes.paginator = this.pagonator;
+                    
+                    console.log(this.recipes);
+
+                    this.recipes.paginator = this.paginator;                    
+                    this.recipes.sort = this.sort;
                 });  
             })            
         });
@@ -84,6 +116,17 @@ export class RecipesListComponent{
         });
     }
 
+    openEditDialog(rowData){
+        const dialogRef = this.dialog.open(
+            EditRecipeComponent,
+            {
+                data: {
+                    name: rowData.name,
+                    cost: rowData.cost,
+                    ingredients: this.recipes.data.find(x => x.name == rowData.name).ingredients
+            }});
+    }
+
     deleteRecipe(recipeName: string){
         this.auth.user$.subscribe(user =>
         {
@@ -95,17 +138,22 @@ export class RecipesListComponent{
         let result: number = 0;
         var found = true;
 
+
+        console.log(ingredientes);
+        console.log(allComponents);
+
         ingredientes.forEach(ingredient =>
         {            
             if (ingredient.name != "")
-            {                
+            {           
+                console.log(ingredient.name);
+                console.log("!=");     
                 var component = allComponents.find(x => x.name == ingredient.name);
                 if (component == undefined){
                     found = false;
                     return;
                 } else {
-                    result += ingredient.count * component.cost;
-                    
+                    result += ingredient.count * component.cost;                    
                 }   
             }       
         });

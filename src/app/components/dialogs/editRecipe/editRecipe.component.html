@@ -1,17 +1,18 @@
-<form [formGroup]="addNewRecipeForm">
-  <h1 mat-dialog-title>Create new recipe</h1>
+<form [formGroup]="editRecipeForm">
+  <h1 mat-dialog-title>Edit recipe</h1>
   <mat-dialog-content class="mat-typography">
       <mat-form-field class="full-width">        
         <mat-label>Recipe name</mat-label>
-        <input matInput formControlName="name" required>    
+        <input matInput formControlName="name" required [(ngModel)]="data.name">    
       </mat-form-field>
     
       <mat-form-field class="full-width">        
         <mat-label>Item auc cost</mat-label>
-        <input matInput type="number" formControlName="cost" required>
+        <input matInput type="number" formControlName="cost" required [(ngModel)]="data.cost">
       </mat-form-field>
       
-      <div formArrayName = "ingredients" *ngFor="let x of addNewRecipeForm.get('ingredients').controls; let i = index;">
+      <!-- <div formArrayName = "ingredients" *ngFor="let x of addNewRecipeForm.get('ingredients').controls; let i = index;"> -->
+        <div formArrayName = "ingredients" *ngFor="let x of editRecipeForm.get('ingredients').controls; let i = index;">
           <div [formGroupName]="i">
             <mat-form-field>
               <mat-label>Ingredianse</mat-label>
@@ -19,6 +20,7 @@
                 matInput 
                 formControlName="name" 
                 required
+                [(ngModel)]="data.ingredients[i].name"
                 [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
                   <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
@@ -29,7 +31,13 @@
         
             <mat-form-field>
               <mat-label>Count</mat-label>    
-              <input matInput type="number"  min="1" formControlName="count" required>
+              <input 
+                [(ngModel)]="data.ingredients[i].count" 
+                matInput 
+                type="number"  
+                min="1" 
+                formControlName="count" 
+                required>
             </mat-form-field>
     
             <button mat-icon-button (click)="addNewIngr()">
@@ -43,6 +51,7 @@
 
   </mat-dialog-content>
   <div mat-dialog-actions align="end">
-    <button mat-raised-button color="primary" (click)="createRecipe()">Add</button> 
+    <button mat-raised-button (click)="close()">Close</button>
+    <button mat-raised-button color="primary" (click)="editRecipe()">Update</button> 
   </div>
 </form> 
