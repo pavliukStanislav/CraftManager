@@ -2,13 +2,15 @@ import  { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import { LogService } from '../../services/logging/log.service';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { from } from 'rxjs';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material/icon';
 
 @Component({
     selector: "signup",
@@ -17,46 +19,69 @@ import { AuthService } from 'src/app/services/auth/auth.service';
     providers: [ LogService ]
 })
 export class SignUpComponent{
-    email = new FormControl('', [Validators.required, Validators.email])
+    registerForm: FormGroup;
+
+    // email = new FormControl('', [Validators.required, Validators.email])
     hide = true;
-    password = new FormControl('', [Validators.required, Validators.minLength(8)])
+    // password = new FormControl('', [Validators.required, Validators.minLength(8)])
+    // confirmPassword = new FormControl('', [Validators.required])
 
     constructor(
-        public auth: AuthService){
+        iconRegistry: MatIconRegistry, 
+        sanitizer: DomSanitizer,
+        public auth: AuthService,
+        private formBuilder: FormBuilder){
+            iconRegistry.addSvgIcon(
+                'google',
+                sanitizer.bypassSecurityTrustResourceUrl('assets/icons/google.svg'));
     }   
     
     ngOnInit(): void {
+        this.registerForm = this.formBuilder.group({
+            email: ['', [Validators.required, Validators.pattern(/^[\w-\.+]+@([\w-]+\.)+[\w-]{2,4}$/g)]],
+            password: ['', [Validators.required, Validators.minLength(8)]],
+            confirmPassword: ['', [Validators.required]]
+        }, {
+            validators: this.MustMatch('password', 'confirmPassword')
+        });
+
     }
 
-    getEmailErrorMessage(){
-        if (this.email.hasError('required')){
-            return 'You must enter a value';
-        } else if (this.email.hasError('email')){
-            return 'This is not valid value'
-        } else {
-            return '';
-        }
-    }
+    get f() { return this.registerForm.controls; }
 
-    getPasswordErrorMessage(){
-        if (this.password.hasError('required')){
-            return 'Password is required';
-        } else if (this.password.hasError('minlength')){
-            return 'Password should have at least 8 symbols';
-        } else {
-            return '';
-        }
-    }
 
     signUp(){
-        if (this.email.invalid)
-        {
-            this.getEmailErrorMessage();
-        } else if (this.password.invalid)
-        {
-            this.getPasswordErrorMessage();
-        } else {
-            this.auth.emailSignUp(this.email.value, this.password.value);
+        if (this.registerForm.invalid){
+            return;
+        }
+
+        this.auth.assertUserExist(this.registerForm.get('email').value).then(exist => {
+            if (exist){
+                this.registerForm.controls.email.setErrors({
+                    alreadyRegistered: true
+                })
+            }
+            else {
+                this.auth.emailSignUp(this.registerForm.get('email').value, this.registerForm.get('password').value);                
+            }
+        });
+    }
+
+    MustMatch(controlName: string, matchingControlName: string) {
+        return (formGroup: FormGroup) => {
+            const control = formGroup.controls[controlName];
+            const matchingControl = formGroup.controls[matchingControlName];
+    
+            if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+                return;
+            }
+                
+            if (control.value !== matchingControl.value) {
+                matchingControl.setErrors({ mustMatch: true });
+            } else {
+                matchingControl.setErrors(null);
+            }
         }
     }
+    
 }
