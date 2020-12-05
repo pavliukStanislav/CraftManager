@@ -1,8 +1,10 @@
 import  { Component } from '@angular/core';
 
 import { LogService } from '../../services/logging/log.service';
-import { FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
     selector: "signin",
@@ -11,47 +13,42 @@ import { AuthService } from 'src/app/services/auth/auth.service';
     providers: [ LogService ]
 })
 export class SignInComponent{
-    email = new FormControl('', [Validators.required, Validators.email])
+    loginForm: FormGroup;
     hide = true;
-    password = new FormControl('', [Validators.required, Validators.minLength(8)])
 
     constructor(
+        iconRegistry: MatIconRegistry, 
+        sanitizer: DomSanitizer,
         log: LogService, 
-        public auth: AuthService,){
+        public auth: AuthService,
+        private formBuilder: FormBuilder){
+            iconRegistry.addSvgIcon(
+                'google',
+                sanitizer.bypassSecurityTrustResourceUrl('assets/icons/google.svg'));
     }   
     
     ngOnInit(): void {
-    }
+        this.loginForm = this.formBuilder.group({
+            email: ['', [Validators.required, Validators.pattern(/^[\w-\.+]+@([\w-]+\.)+[\w-]{2,4}$/g)]],
+            password: ['', [Validators.required, Validators.minLength(8)]]
+        });
+    }    
 
-    getEmailErrorMessage(){
-        if (this.email.hasError('required')){
-            return 'You must enter a value';
-        } else if (this.email.hasError('email')){
-            return 'This is not valid value'
-        } else {
-            return '';
-        }
-    }
-
-    getPasswordErrorMessage(){
-        if (this.password.hasError('required')){
-            return 'Password is required';
-        } else if (this.password.hasError('minlength')){
-            return 'Password should have at least 8 symbols';
-        } else {
-            return '';
-        }
-    }
+    get f() { return this.loginForm.controls; }
 
     signIn(){
-        if (this.email.invalid)
-        {
-            this.getEmailErrorMessage();
-        } else if (this.password.invalid)
-        {
-            this.getPasswordErrorMessage();
-        } else {
-            this.auth.emailSignIn(this.email.value, this.password.value);
+        if (this.loginForm.invalid){
+            return;
         }
+
+        this.auth.assertUserExist(this.loginForm.get('email').value).then(exist => {
+            if (exist){
+                this.auth.emailSignIn(this.loginForm.get('email').value, this.loginForm.get('password').value);
+            } else {
+                this.loginForm.controls.email.setErrors({
+                    notRegistered: true
+                })
+            }
+        })        
     }
 }
