@@ -34,17 +34,22 @@ export class AuthService {
     )
   }
 
+  async assertUserExist(email: string) : Promise<boolean>{
+      return await (await (this.afAuth.fetchSignInMethodsForEmail(email))).length > 0;
+  }
+
   async googleSignIn(){
     const provider = new firebase.auth.GoogleAuthProvider();
     const credential = await this.afAuth.signInWithPopup(provider)
+
+    this.updateUserData(credential.user);
+    this.user$ = this.getCurrentUserData(credential.user.uid);
     this.router.navigate(['recipes']);
-    return this.updateUserData(credential.user);
   }
 
   async emailSignIn(email, password){
     var currentUser = (await (this.afAuth.signInWithEmailAndPassword(email, password))).user;
     this.updateUserData(currentUser);
-
     this.router.navigate(['recipes'])
     this.user$ = this.getCurrentUserData(currentUser.uid);
   }

@@ -25,3 +25,21 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.title{
+  font-size: x-large;
+}
+
+.login-link{
+  color: white;
+}
+
+.external-services{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grey{
+  color: gray;
+}

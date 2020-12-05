@@ -10,5 +10,5 @@ import { LogService } from './services/logging/log.service';
   providers: [ LogService ]
 })
 export class AppComponent {
-  title = 'WoWAlchemistCalculator';
+  title = 'Craft manager';
 }
