@@ -1,12 +1,8 @@
-import  { Component } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { Component } from '@angular/core';
 
 import { LogService } from '../../services/logging/log.service';
-import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { from } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import firebase from 'firebase/app';
 import 'firebase/auth';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -20,11 +16,7 @@ import {MatIconRegistry} from '@angular/material/icon';
 })
 export class SignUpComponent{
     registerForm: FormGroup;
-
-    // email = new FormControl('', [Validators.required, Validators.email])
     hide = true;
-    // password = new FormControl('', [Validators.required, Validators.minLength(8)])
-    // confirmPassword = new FormControl('', [Validators.required])
 
     constructor(
         iconRegistry: MatIconRegistry, 
@@ -44,11 +36,9 @@ export class SignUpComponent{
         }, {
             validators: this.MustMatch('password', 'confirmPassword')
         });
-
     }
 
     get f() { return this.registerForm.controls; }
-
 
     signUp(){
         if (this.registerForm.invalid){
@@ -60,8 +50,7 @@ export class SignUpComponent{
                 this.registerForm.controls.email.setErrors({
                     alreadyRegistered: true
                 })
-            }
-            else {
+            } else {
                 this.auth.emailSignUp(this.registerForm.get('email').value, this.registerForm.get('password').value);                
             }
         });

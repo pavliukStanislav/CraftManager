@@ -20,7 +20,8 @@ interface RecipesListItem{
     name: string;
     cost: number;
     selfCost: string;
-    profit: string;
+    profit_number: string;
+    profit_persentage: string;
     costEffective: boolean;
     ingredients: Array<IngredientsInfo>;
 }
@@ -47,7 +48,7 @@ interface IngredientsInfo{
 export class RecipesListComponent{
     recipesService: RecipesService;
     componentsService: ComponentsService;
-    columnsToDisplay : string[] = ['collaped','name', 'cost', 'self_cost', 'profit', 'actions'];
+    columnsToDisplay : string[] = ['collaped','name', 'cost', 'self_cost', 'profit_number', 'profit_persentage', 'actions'];
     detailColumnsToDisplay : string [] = ['name', 'count', 'cost'];
     expandedElement: RecipesListItem | null;
 
@@ -78,11 +79,13 @@ export class RecipesListComponent{
                         let profitCount = x.cost - +selfCost;
                         let profitPersentage = (profitCount * 100 / x.cost).toFixed(2);
 
+                        console.log(profitCount);
                         return {
                             name: x.name,
                             cost: x.cost,
                             selfCost: selfCost,
-                            profit: profitCount > 0 ? `${profitCount} | ${profitPersentage}%` : selfCost,
+                            profit_number: profitCount.toString() === "NaN" ? "--" : profitCount.toString(),
+                            profit_persentage: profitPersentage.toString() === "NaN" ? "--" : profitPersentage.toString(),
                             costEffective: profitCount > 0 ? true: false,
                             ingredients: x.ingredients.map(ingr => {
                                 return {

@@ -88,10 +88,7 @@ export class AddNewRecipeComponent{
     }
 
     createRecipe(){
-        //this.addNewRecipeForm.value.items;
-
         this.addNewRecipeForm.value.userId = this.currentUserId;
-        console.log(this.addNewRecipeForm.value);
 
         this.recipesService.addDataToCollection(this.addNewRecipeForm.value);        
 

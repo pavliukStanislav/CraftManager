@@ -45,14 +45,25 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="profit">
+    <ng-container matColumnDef="profit_number">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Profit </th>
       <td 
         (click)="expandedElement = expandedElement === element ? null : element" 
         mat-cell 
         *matCellDef="let element"  
         [style.color]= "element.costEffective? 'green' : 'red'"> 
-        {{element.profit}} 
+        {{element.profit_number}} 
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="profit_persentage">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Profit (%) </th>
+      <td 
+        (click)="expandedElement = expandedElement === element ? null : element" 
+        mat-cell 
+        *matCellDef="let element"  
+        [style.color]= "element.costEffective? 'green' : 'red'"> 
+        {{element.profit_persentage}} 
       </td>
     </ng-container>
 

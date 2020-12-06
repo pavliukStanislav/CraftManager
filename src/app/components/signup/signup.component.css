@@ -28,6 +28,7 @@
 
 .title{
   font-size: x-large;
+  margin-bottom: 20px;
 }
 
 .login-link{
@@ -40,6 +41,6 @@
   justify-content: center;
 }
 
-.grey{
+.gray{
   color: gray;
 }
