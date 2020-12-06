@@ -1,0 +1,29 @@
+<form class="form" [formGroup]="loginForm">
+    <mat-label class="title">Login</mat-label> 
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="pat@example.com" formControlName="email" required>
+        <mat-error *ngIf="f.email.errors?.required">Email is required</mat-error>
+        <mat-error *ngIf="f.email.errors?.pattern">Email must be a valid email address</mat-error>
+        <mat-error *ngIf="f.email.errors?.notRegistered">This email address is not registered</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]='hide'>
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="f.password.errors?.required">Password is required</mat-error>
+        <mat-error *ngIf="f.password.errors?.minlength">Password must be at least 8 characters</mat-error>
+    </mat-form-field>
+    <div class="form-footer">    
+        <div>Not a member? <a class="register-link" routerLink="/signup">Register now!</a></div>
+        <button mat-raised-button (click)="signIn()">Login</button>
+    </div>
+    
+    <p class="external-services gray">Or sign in with</p>
+    <div class="external-services">
+        <mat-icon (click)="auth.googleSignIn()" svgIcon="google"></mat-icon>
+    </div>
+</form> 

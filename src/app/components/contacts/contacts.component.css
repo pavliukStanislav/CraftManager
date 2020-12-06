@@ -1,0 +1,35 @@
+:host {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .form-control{
+    display: block;
+  }
+  
+  
+   .form {
+      min-width: 150px;
+      max-width: 500px;
+      width: 100%;
+    }
+    
+  .full-width {
+      width: 100%;
+  }
+  
+  .form-footer {
+    text-align: right;
+    justify-content: flex-end;
+  }
+  
+  .title{
+    font-size: x-large;
+    margin-bottom: 20px;
+  }
+  
+  .login-link{
+    color: white;
+  }

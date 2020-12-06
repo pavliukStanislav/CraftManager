@@ -10,6 +10,14 @@ import { MatListModule}         from '@angular/material/list';
 import { MatFormFieldModule}    from '@angular/material/form-field';
 import { MatInputModule }       from '@angular/material/input';
 import { MatCardModule }        from '@angular/material/card';
+import { MatExpansionModule }   from '@angular/material/expansion';
+import { MatTreeModule }        from "@angular/material/tree";
+import { MatSnackBarModule }    from "@angular/material/snack-bar";
+import { MatTableModule }       from "@angular/material/table";
+import { MatPaginatorModule }   from '@angular/material/paginator';
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatDialogModule }      from "@angular/material/dialog";
+import { MatSortModule }              from "@angular/material/sort";
 
 @NgModule({
     imports: [
@@ -22,7 +30,15 @@ import { MatCardModule }        from '@angular/material/card';
         MatFormFieldModule,
         MatInputModule,
         MatCardModule,
-        CommonModule
+        CommonModule,
+        MatExpansionModule,
+        MatTreeModule,
+        MatSnackBarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatAutocompleteModule,
+        MatDialogModule,
+        MatSortModule
     ],
     exports: [
         MatToolbarModule,
@@ -33,7 +49,15 @@ import { MatCardModule }        from '@angular/material/card';
         MatListModule,
         MatFormFieldModule,
         MatInputModule,
-        MatCardModule
+        MatCardModule,
+        MatExpansionModule,
+        MatTreeModule,
+        MatSnackBarModule,
+        MatTableModule,
+        MatPaginatorModule,
+        MatAutocompleteModule,
+        MatDialogModule,
+        MatSortModule
     ],
     declarations: []
 })

@@ -1,0 +1,31 @@
+<form [formGroup]="createMessageForm">
+    <h1 mat-dialog-title>Contact me:</h1>
+    <mat-dialog-content class="mat-typography">
+        <mat-form-field class="full-width">        
+            <mat-label>Your name:</mat-label>
+            <input matInput formControlName="name" required>  
+            <mat-error *ngIf="f.name.errors?.required">Name is required</mat-error>  
+        </mat-form-field>
+        <mat-form-field class="full-width">        
+            <mat-label>Your email:</mat-label>
+            <input matInput formControlName="email" required>    
+            <mat-error *ngIf="f.email.errors?.required">Email is required</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width">        
+            <mat-label>Message:</mat-label>
+            <textarea rows="3"  matInput formControlName="message" required></textarea>
+            <mat-error *ngIf="f.message.errors?.required">Message is required</mat-error>
+        </mat-form-field>
+    </mat-dialog-content>
+    <div class="form-footer"> 
+        <button mat-raised-button color="primary" (click)="createMessage()">SEND</button>
+    </div>
+    <div>
+        <h3>Other channels:</h3>
+        <table>
+            <tr>
+                <td>Email:</td><td>pavliuk.stanislav@gmail.com</td>
+            </tr>
+        </table>
+    </div>
+</form>

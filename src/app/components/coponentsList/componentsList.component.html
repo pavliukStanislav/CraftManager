@@ -1,0 +1,32 @@
+<div class="actions">
+  <a mat-raised-button color="primary" (click)="openAddNewComponentDialog()">+ CREATE COMPONENT</a>
+</div>
+<div>
+  <table class="mat-elevation-z8" mat-table [dataSource]="components">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef> Cost </th>
+      <td mat-cell *matCellDef="let element"> {{element.cost}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="align-right"></th>
+      <td mat-cell class="align-right" *matCellDef="let element">        
+        <a mat-icon-button (click)="openEditComponentDialog(element)">
+          <mat-icon>edit</mat-icon>
+        </a>
+        <a mat-icon-button (click)="openDeleteDialog(element)">
+          <mat-icon>delete</mat-icon>
+        </a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+</div>

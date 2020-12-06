@@ -1,0 +1,120 @@
+<div class="actions">
+  <a mat-raised-button color="primary" (click)="openAddNewRecipeDialog()">+ CREATE RECIPE</a>
+</div>
+<div>
+  <table mat-table [dataSource]="recipes" matSort class="mat-elevation-z8" multiTemplateDataRows>
+    <ng-container matColumnDef="collaped">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td 
+        (click)="expandedElement = expandedElement === element ? null : element"
+        mat-cell
+        *matCellDef="let element">
+        <div>
+          <mat-icon *ngIf="!expandedElement || expandedElement !== element">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="expandedElement && expandedElement === element">keyboard_arrow_up</mat-icon>
+        </div>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td 
+        (click)="expandedElement = expandedElement === element ? null : element"
+        mat-cell
+        *matCellDef="let element">
+        {{element.name}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Cost </th>
+      <td 
+        (click)="expandedElement = expandedElement === element ? null : element" 
+        mat-cell 
+        *matCellDef="let element">
+        {{element.cost}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="self_cost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Self cost </th>
+      <td
+        (click)="expandedElement = expandedElement === element ? null : element" 
+        mat-cell 
+        *matCellDef="let element"> 
+        {{element.selfCost}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="profit_number">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Profit </th>
+      <td 
+        (click)="expandedElement = expandedElement === element ? null : element" 
+        mat-cell 
+        *matCellDef="let element"  
+        [style.color]= "element.costEffective? 'green' : 'red'"> 
+        {{element.profit_number}} 
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="profit_persentage">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Profit (%) </th>
+      <td 
+        (click)="expandedElement = expandedElement === element ? null : element" 
+        mat-cell 
+        *matCellDef="let element"  
+        [style.color]= "element.costEffective? 'green' : 'red'"> 
+        {{element.profit_persentage}} 
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell class="align-right" *matCellDef="let element">
+        <a 
+          mat-button
+          (click)="openEditDialog(element)">
+          <mat-icon>edit</mat-icon>
+        </a>
+        <a 
+          mat-button
+          (click)="openDeleteDialog(element)">
+          <mat-icon>delete</mat-icon>
+        </a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colSpan]="columnsToDisplay.length">
+        <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded': 'collapsed'">
+          <table mat-table [dataSource]="element.ingredients">
+           
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Ingredient name </th>
+              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="count">
+              <th mat-header-cell *matHeaderCellDef> Count </th>
+              <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+            </ng-container>
+        
+            <ng-container matColumnDef="cost">
+              <th mat-header-cell *matHeaderCellDef> Cost </th>
+              <td mat-cell *matCellDef="let element"> {{element.cost}} </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="detailColumnsToDisplay"></tr>
+            <tr mat-row *matRowDef="let row; columns: detailColumnsToDisplay;"></tr>
+          </table>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+        class="element-row"
+        [class.expanded-row]="expandedElement === element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+</div>
