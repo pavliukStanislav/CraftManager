@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "WoWAlchemistCalculator": {
+    "CraftManager": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/WoWAlchemistCalculator",
+            "outputPath": "dist/CraftManager",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "WoWAlchemistCalculator:build"
+            "browserTarget": "CraftManager:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "WoWAlchemistCalculator:build:production"
+              "browserTarget": "CraftManager:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "WoWAlchemistCalculator:build"
+            "browserTarget": "CraftManager:build"
           }
         },
         "test": {
@@ -112,11 +112,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "WoWAlchemistCalculator:serve"
+            "devServerTarget": "CraftManager:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "WoWAlchemistCalculator:serve:production"
+              "devServerTarget": "CraftManager:serve:production"
             }
           }
         },
@@ -127,5 +127,5 @@
       }
     }
   },
-  "defaultProject": "WoWAlchemistCalculator"
+  "defaultProject": "CraftManager"
 }
